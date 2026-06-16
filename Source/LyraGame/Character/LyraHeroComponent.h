@@ -46,6 +46,12 @@ public:
 
 	/** Clears the camera override if it is set */
 	UE_API void ClearAbilityCameraMode(const FGameplayAbilitySpecHandle& OwningSpecHandle);
+	
+	/** Overrides the camera from an active gameplay volume */
+	UE_API void SetVolumeCameraMode(TSubclassOf<ULyraCameraMode> CameraMode);
+
+	/** Clears the camera override if it is set */
+	UE_API void ClearVolumeCameraMode();
 
 	/** Adds mode-specific input config */
 	UE_API void AddAdditionalInputConfig(const ULyraInputConfig* InputConfig);
@@ -97,6 +103,10 @@ protected:
 	/** Camera mode set by an ability. */
 	UPROPERTY()
 	TSubclassOf<ULyraCameraMode> AbilityCameraMode;
+	
+	/** Camera mode set when walking in a CameraModeVolume. */
+	UPROPERTY()
+	TSubclassOf<ULyraCameraMode> VolumeCameraMode;
 
 	/** Spec handle for the last ability to set a camera mode. */
 	FGameplayAbilitySpecHandle AbilityCameraModeOwningSpecHandle;

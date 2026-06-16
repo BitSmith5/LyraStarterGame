@@ -470,6 +470,11 @@ void ULyraHeroComponent::Input_AutoRun(const FInputActionValue& InputActionValue
 
 TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
 {
+	if (VolumeCameraMode)
+	{
+		return VolumeCameraMode;
+	}
+	
 	if (AbilityCameraMode)
 	{
 		return AbilityCameraMode;
@@ -508,5 +513,18 @@ void ULyraHeroComponent::ClearAbilityCameraMode(const FGameplayAbilitySpecHandle
 		AbilityCameraMode = nullptr;
 		AbilityCameraModeOwningSpecHandle = FGameplayAbilitySpecHandle();
 	}
+}
+
+void ULyraHeroComponent::SetVolumeCameraMode(TSubclassOf<ULyraCameraMode> CameraMode)
+{
+	if (CameraMode)
+	{
+		VolumeCameraMode = CameraMode;
+	}
+}
+
+void ULyraHeroComponent::ClearVolumeCameraMode()
+{
+	VolumeCameraMode = nullptr;
 }
 

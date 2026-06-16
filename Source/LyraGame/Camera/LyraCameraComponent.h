@@ -7,6 +7,7 @@
 
 #include "LyraCameraComponent.generated.h"
 
+class ACameraModeVolume;
 class UCanvas;
 class ULyraCameraMode;
 class ULyraCameraModeStack;
@@ -39,6 +40,11 @@ public:
 
 	// Returns the target actor that the camera is looking at.
 	virtual AActor* GetTargetActor() const { return GetOwner(); }
+	
+	ACameraModeVolume * GetCurrentCameraVolume() const;
+	void SetCameraVolume(ACameraModeVolume * CameraModeVolume);
+	void ClearCameraVolume();
+	
 
 	// Delegate used to query for the best camera mode.
 	FLyraCameraModeDelegate DetermineCameraModeDelegate;
@@ -63,6 +69,9 @@ protected:
 	// Stack used to blend the camera modes.
 	UPROPERTY()
 	TObjectPtr<ULyraCameraModeStack> CameraModeStack;
+	
+	UPROPERTY(Transient)
+	TWeakObjectPtr<ACameraModeVolume> CameraVolume;
 
 	// Offset applied to the field of view.  The offset is only for one frame, it gets cleared once it is applied.
 	float FieldOfViewOffset;

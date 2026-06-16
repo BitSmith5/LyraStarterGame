@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "LyraCameraComponent.h"
-
+#include "CameraModeVolume.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Pawn.h"
@@ -16,6 +16,21 @@ ULyraCameraComponent::ULyraCameraComponent(const FObjectInitializer& ObjectIniti
 {
 	CameraModeStack = nullptr;
 	FieldOfViewOffset = 0.0f;
+}
+
+ACameraModeVolume* ULyraCameraComponent::GetCurrentCameraVolume() const
+{
+	return CameraVolume.Get();
+}
+
+void ULyraCameraComponent::SetCameraVolume(ACameraModeVolume* CameraModeVolume)
+{
+	CameraVolume = CameraModeVolume;
+}
+
+void ULyraCameraComponent::ClearCameraVolume()
+{
+	CameraVolume = nullptr;
 }
 
 void ULyraCameraComponent::OnRegister()

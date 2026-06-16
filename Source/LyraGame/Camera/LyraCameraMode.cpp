@@ -2,6 +2,7 @@
 
 #include "LyraCameraMode.h"
 
+#include "CameraMode_Volume.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/Canvas.h"
 #include "GameFramework/Character.h"
@@ -269,6 +270,13 @@ void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraMod
 	}
 
 	ULyraCameraMode* CameraMode = GetCameraModeInstance(CameraModeClass);
+	if (UCameraMode_Volume* VolumeCameraMode = Cast<UCameraMode_Volume>(CameraMode))
+	{
+		if (const auto Volume = CameraMode->GetLyraCameraComponent()->GetCurrentCameraVolume())
+		{
+			VolumeCameraMode->SetVolume(Volume);
+		}
+	}
 	check(CameraMode);
 
 	int32 StackSize = CameraModeStack.Num();
