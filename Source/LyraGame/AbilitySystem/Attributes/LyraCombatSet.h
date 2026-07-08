@@ -28,14 +28,28 @@ public:
 
 	ATTRIBUTE_ACCESSORS(ULyraCombatSet, BaseDamage);
 	ATTRIBUTE_ACCESSORS(ULyraCombatSet, BaseHeal);
+	ATTRIBUTE_ACCESSORS(ULyraCombatSet, Mana);
+	ATTRIBUTE_ACCESSORS(ULyraCombatSet, MaxMana);
 
 protected:
+	
+	virtual bool PreGameplayEffectExecute(FGameplayEffectModCallbackData& Data) override;
+	virtual void PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const override;
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	UFUNCTION()
 	void OnRep_BaseDamage(const FGameplayAttributeData& OldValue);
 
 	UFUNCTION()
 	void OnRep_BaseHeal(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	void OnRep_Mana(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	void OnRep_MaxMana(const FGameplayAttributeData& OldValue);
+	
+	void ClampAttribute(const FGameplayAttribute& Attribute, float& NewValue) const;
 
 private:
 
@@ -46,4 +60,12 @@ private:
 	// The base amount of healing to apply in the heal execution.
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseHeal, Category = "Lyra|Combat", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData BaseHeal;
+	
+	// The current Mana attribute.  The Mana will be capped by the max Mana attribute.  Mana is hidden from modifiers so only executions can modify it.
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Lyra|Mana", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData Mana;
+
+	// The current max Mana attribute.  Max Mana is an attribute since gameplay effects can modify it.
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Lyra|Mana", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData MaxMana;
 };

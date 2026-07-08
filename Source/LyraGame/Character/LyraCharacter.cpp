@@ -11,6 +11,7 @@
 #include "LyraCharacterMovementComponent.h"
 #include "LyraGameplayTags.h"
 #include "LyraLogChannels.h"
+#include "ManaComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/LyraPlayerController.h"
 #include "Player/LyraPlayerState.h"
@@ -68,6 +69,8 @@ ALyraCharacter::ALyraCharacter(const FObjectInitializer& ObjectInitializer)
 	HealthComponent = CreateDefaultSubobject<ULyraHealthComponent>(TEXT("HealthComponent"));
 	HealthComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	HealthComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
+	
+	ManaComponent = CreateDefaultSubobject<UManaComponent>(TEXT("ManaComponent"));
 
 	CameraComponent = CreateDefaultSubobject<ULyraCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
@@ -200,6 +203,7 @@ void ALyraCharacter::OnAbilitySystemInitialized()
 	check(LyraASC);
 
 	HealthComponent->InitializeWithAbilitySystem(LyraASC);
+	ManaComponent->InitializeWithAbilitySystem(LyraASC);
 
 	InitializeGameplayTags();
 }
@@ -207,6 +211,7 @@ void ALyraCharacter::OnAbilitySystemInitialized()
 void ALyraCharacter::OnAbilitySystemUninitialized()
 {
 	HealthComponent->UninitializeFromAbilitySystem();
+	ManaComponent->UninitializeFromAbilitySystem();
 }
 
 void ALyraCharacter::PossessedBy(AController* NewController)
