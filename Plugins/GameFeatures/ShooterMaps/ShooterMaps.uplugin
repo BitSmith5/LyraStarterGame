@@ -25,6 +25,10 @@
 		{
 			"Name": "LyraExampleContent",
 			"Enabled": true
+		},
+		{
+			"Name": "ShooterExplorer",
+			"Enabled": true
 		}
 	]
 }

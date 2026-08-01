@@ -23,6 +23,9 @@ public:
 	// Will always return false except when playing in the editor and bTestFullGameFlowInPIE (in Lyra Developer Settings) is false
 	UFUNCTION(BlueprintCallable, Category="Lyra")
 	static bool ShouldSkipDirectlyToGameplay();
+	
+	UFUNCTION(BlueprintCallable, Category="Cinematics")
+	static bool ShouldSkipOpeningCinematics();
 
 	// Should game logic load cosmetic backgrounds in the editor?
 	// Will always return true except when playing in the editor and bSkipLoadingCosmeticBackgroundsInPIE (in Lyra Developer Settings) is true

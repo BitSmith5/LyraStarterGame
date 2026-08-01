@@ -24,6 +24,17 @@ bool ULyraDevelopmentStatics::ShouldSkipDirectlyToGameplay()
 	return false;
 }
 
+bool ULyraDevelopmentStatics::ShouldSkipOpeningCinematics()
+{
+#if WITH_EDITOR
+	if (GIsEditor)
+	{
+		return GetDefault<ULyraDeveloperSettings>()->bShouldSkipIntroVideo;
+	}
+#endif
+	return false;
+}
+
 bool ULyraDevelopmentStatics::ShouldLoadCosmeticBackgrounds()
 {
 #if WITH_EDITOR

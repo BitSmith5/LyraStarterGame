@@ -55,6 +55,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, config, Category=LyraBots, meta=(InlineEditConditionToggle))
 	bool bOverrideBotCount = false;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Config, Category=Cinematics)
+	bool bShouldSkipIntroVideo = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, config, Category=LyraBots, meta=(EditCondition=bOverrideBotCount))
 	int32 OverrideNumPlayerBotsToSpawn = 0;
